@@ -15,8 +15,6 @@ build:
 deploy_staging:
   variables:
     DOCKER_PORT: 5000:5000
-    APP_ENV: prod
-    APP_SECRET: 0a85d9545c68142126f56d72df51780c
 
   stage: deploy
   only:
