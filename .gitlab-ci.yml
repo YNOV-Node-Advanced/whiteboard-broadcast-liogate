@@ -1,0 +1,40 @@
+image: docker:stable
+
+stages:
+  - build
+  - deploy
+
+before_script:
+- docker info
+
+build:
+  stage: build
+  script:
+    - docker build -t registry.skyloud.net/random/whiteboard .
+
+deploy_staging:
+  variables:
+    DOCKER_PORT: 5000:5000
+    APP_ENV: prod
+    APP_SECRET: 0a85d9545c68142126f56d72df51780c
+
+  stage: deploy
+  only:
+    - develop
+  script:
+    - docker rm -f prod-whiteboard 2>/dev/null || true
+    - docker run -d -p $DOCKER_PORT --name prod-whiteboard registry.skyloud.net/random/whiteboard
+  environment:
+    name: staging
+    url: https://www.skyloud.fr:5000
+
+deploy_production:
+  stage: deploy
+  only:
+    - master
+  script:
+    - docker rm -f prod-whiteboard 2>/dev/null || true
+    - docker run -d -p $DOCKER_PORT --name prod-whiteboard registry.skyloud.net/random/whiteboard
+  environment:
+    name: production
+    url: https://www.skyloud.fr:5000
