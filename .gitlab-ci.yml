@@ -14,7 +14,7 @@ build:
 
 deploy_staging:
   variables:
-    DOCKER_PORT: 5000:5000
+    DOCKER_PORT: 5001:5001
 
   stage: deploy
   only:
@@ -24,9 +24,11 @@ deploy_staging:
     - docker run -d -p $DOCKER_PORT --name prod-whiteboard registry.skyloud.net/random/whiteboard
   environment:
     name: staging
-    url: https://www.skyloud.fr:5000
+    url: https://www.skyloud.fr:5001
 
 deploy_production:
+  variables:
+    DOCKER_PORT: 5001:5001
   stage: deploy
   only:
     - master
@@ -35,4 +37,4 @@ deploy_production:
     - docker run -d -p $DOCKER_PORT --name prod-whiteboard registry.skyloud.net/random/whiteboard
   environment:
     name: production
-    url: https://www.skyloud.fr:5000
+    url: https://www.skyloud.fr:5001

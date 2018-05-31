@@ -20,7 +20,7 @@ container.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 
 // Draw in the canvas for draw message received
-const socket = new WebSocket("ws://localhost:5000/", "protocolOne");
+const socket = new WebSocket("ws://www.skyloud.fr:5001/", "protocolOne");
 
 socket.addEventListener("message", event => {
     //console.log(event);
