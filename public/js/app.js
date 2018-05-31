@@ -23,8 +23,8 @@ const ctx = canvas.getContext("2d");
 const socket = new WebSocket("ws://localhost:5000/", "protocolOne");
 
 socket.addEventListener("message", event => {
+    //console.log(event);
     const message = JSON.parse(event.data);
-
     if (message.channel != CURRENT_CHANNEL) {
         throw new Error(
             "On ne devrait pas recevoir de message depuis cette channel"
